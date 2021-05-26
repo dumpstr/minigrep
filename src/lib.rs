@@ -1,6 +1,6 @@
+use std::env;
 use std::error::Error;
 use std::fs;
-use std::env;
 
 #[cfg(test)]
 mod tests {
@@ -15,7 +15,10 @@ this string has the search term honkle
 snacks captain cronch
 Honk scoop";
 
-        assert_eq!(vec!["this string has the search term honkle"], search(query, contents));
+        assert_eq!(
+            vec!["this string has the search term honkle"],
+            search(query, contents)
+        );
     }
 
     fn case_insensitive() {
@@ -56,15 +59,19 @@ impl Config {
 
         let case_sensitive = env::var("CASE_INSENSITIVE").is_err();
 
-        Ok(Config { query, filename, case_sensitive, })
+        Ok(Config {
+            query,
+            filename,
+            case_sensitive,
+        })
     }
 }
 
 pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-   contents
+    contents
         .lines()
         .filter(|line| line.contains(query))
-        .collect() 
+        .collect()
 }
 
 pub fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
